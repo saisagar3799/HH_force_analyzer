@@ -6,11 +6,23 @@ import re
 from PyPDF2 import PdfReader
 import plotly.graph_objs as go
 
+# Specify the folder path you want to check
+folder_path = "your_folder_name"
+
+# Check if the folder exists
+if not os.path.exists(folder_path):
+    # If not, create the folder
+    os.makedirs(folder_path)
+    print(f"Created folder: {folder_path}")
+else:
+    print(f"Folder already exists: {folder_path}")
+
 st.title("PDF Folder: X-Maximum and Y-Maximum Statistical Summary")
 
 folder_path = st.text_input("Enter the full path to your PDF folder:")
 query = st.text_input("Optional: Search/filter for MP number (e.g. 'MP-012') or leave blank for all:")
 metric = st.radio("Select metric to analyze", ["X-Maximum", "Y-Maximum"])
+
 
 if st.button("Run Analysis") and folder_path:
     pdf_files = [f for f in os.listdir(folder_path) if f.lower().endswith(".pdf") and ("MP-" in f)]
